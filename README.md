@@ -1,5 +1,8 @@
 # 5208 project guidance
-
+### member
+1. Li Jingfei
+2. Jiang Hao
+   
 # Running Spark Project on Google Cloud Storage
 
 This guide will walk you through running a PySpark project to read data from Google Cloud Storage (GCS). The script prepares data by extracting specific fields from a CSV file stored in GCS and processes it using Spark's DataFrame API.
