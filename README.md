@@ -76,5 +76,15 @@ $ gsutil cp path/to/DSA5208Project2.ipynb gs://<your_bucket_name>/
 -  Adjust the paths in the notebook to point to the data in GCS (`gs://<your_bucket_name>/2023.tar.gz`).
 -  Execute each cell to run the analysis.
 
+## Step 4: Submit a PySpark Job
+To run the notebook as a Spark job, you can use the following command to submit it to your Dataproc cluster:
+ ```sh
+$ gcloud dataproc jobs submit pyspark gs://<your_bucket_name>/DSA5208Project2.ipynb \
+--cluster [CLUSTER NAME] \
+--region [REGION]
+ ```
 
-
+## Step 5: Verify results
+- After running the notebook or submitting the PySpark job, you can do the following to verify:
+- **View Data**: Use commands like df.show(5) to display the first five rows of the processed data.
+- **Monitor Jobs**: Monitor your Spark job’s progress in the Google Cloud Console under Dataproc > Jobs.
