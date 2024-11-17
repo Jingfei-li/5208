@@ -11,12 +11,12 @@ Before you start, ensure you have the following:
 
 1. **Log in to your Google account on terminal**:
    ```sh
-   $ gcloud auth login
+    $ gcloud auth login
    ```
 2. **Create a project**:
    ```sh
-   $ gcloud projects create [PROJECT NAME]
-   $ gcloud config set project [PROJECT NAME]
+    $ gcloud projects create [PROJECT NAME]
+    $ gcloud config set project [PROJECT NAME]
    ```
 3. **Link to a billing account**:
    ```sh
@@ -38,7 +38,7 @@ Before you start, ensure you have the following:
 6. **Hadoop and HDFS**: A working Hadoop cluster with HDFS set up.
 7. **Apache Spark**: Set up on Google Dataproc.
 8. **Python Script**: Ensure you have the jupyter notebook script (`DSA5208Project2.ipynb`) to be used.
-9. **Data**: The data file (`2023.tar.gz`) must be available in your GCS bucket (`gs://<your_bucket_name>/2023.tar.gz`).
+9. **Data**: The data file (`2023.tar.gz`) must be available in your GCS bucket (`gs://<your_bucket_name>/2023.tar.gz`). The zip file is download from canvas
 
    
 ## Step 1: Set Up Google Cloud and Dataproc
@@ -47,9 +47,34 @@ Before you start, ensure you have the following:
 - Create a Dataproc cluster to run Spark:
 
   ```sh
-  gcloud dataproc clusters create my-cluster \
-      --region <your-region> \
-      --num-workers 2 \
-      --image-version 2.0-debian10 \
-      --scopes "cloud-platform"
-- Or can directly create cluster on web page follow by the instructions
+   $ gcloud compute networks subnets update default \
+   --region=[REGION] --enable-private-ip-google-access
+   $ gcloud dataproc clusters create [CLUSTER NAME] \
+   --region [REGION] --image-version [IMAGE VERSION] \
+   --master-machine-type [MASTER MACHINE TYPE] \
+   --master-boot-disk-type [MASTER DISK TYPE] --master-boot-disk-size [DISK SIZE] \
+   --num-workers [NUMBER OF WORKERS] \
+   --worker-machine-type [WORKER MACHINE TYPE] \
+   --worker-boot-disk-type [WORKER DISK TYPE] --worker-boot-disk-size [DISK SIZE] \
+   --enable-component-gateway --optional-components JUPYTER
+- Alternatively, you can directly create a cluster via the web interface: follow the instructions in Menu ≡ > Dataproc > Clusters > [Cluster Name] > WEB INTERFACES
+
+## Step 2: Upload Files to Google Cloud Storage
+
+Upload Data File: Use the (`gsutil command`) to upload the (`2023.tar.gz`) file to your GCS bucket:
+ ```sh
+$ gsutil cp path/to/2023.tar.gz gs://<your_bucket_name>/
+   ```
+Upload Jupyter Notebook: Similarly, upload the Jupyter notebook (`DSA5208Project2.ipynb`) to your GCS bucket:
+ ```sh
+$ gsutil cp path/to/DSA5208Project2.ipynb gs://<your_bucket_name>/
+   ```
+## Step 3: Run the Jupyter Notebook
+1. **Access Jupyter**:Once your cluster is running, access the Jupyter Notebook interface from the Google Cloud Console. Navigate to Dataproc > Clusters > [Cluster Name] and click WEB INTERFACES to find the Jupyter link.
+   
+2. **Run the Notebook**:Once inside Jupyter, open the uploaded notebook (`DSA5208Project2.ipynb`)
+-  Adjust the paths in the notebook to point to the data in GCS (`gs://<your_bucket_name>/2023.tar.gz`).
+-  Execute each cell to run the analysis.
+
+
+
