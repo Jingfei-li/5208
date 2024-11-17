@@ -88,3 +88,25 @@ $ gcloud dataproc jobs submit pyspark gs://<your_bucket_name>/DSA5208Project2.ip
 - After running the notebook or submitting the PySpark job, you can do the following to verify:
 - **View Data**: Use commands like df.show(5) to display the first five rows of the processed data.
 - **Monitor Jobs**: Monitor your Spark job’s progress in the Google Cloud Console under Dataproc > Jobs.
+
+## Step 6: Clean Up
+- **Stop the Cluster**: To avoid incurring costs, stop or delete the Dataproc cluster after completing your work:
+ ```sh
+$ gcloud dataproc clusters delete [CLUSTER NAME] --region [REGION]
+ ```
+- **Delete GCS Files**: If you no longer need the data or notebook, delete them from the GCS bucket
+ ```sh
+$ gsutil rm gs://<your_bucket_name>/2023.tar.gz
+$ gsutil rm gs://<your_bucket_name>/DSA5208Project2.ipynb
+ ```
+## Additional Notes
+Ensure the input file in GCS (`2023.tar.gz`) is correctly formatted for the script to work properly.
+Adjust the Spark configurations if running on a cluster with limited resources for optimal performance.
+
+## Troubleshooting
+- File Not Found Error: Ensure that the GCS path (`gs://<your_bucket_name>/2023.tar.gz`) is correct and accessible.
+- Permission Denied: Verify that your service account has the correct permissions to access GCS and Dataproc resources.
+
+## Resources
+- Google Cloud Documentation
+- Apache Spark Documentation
